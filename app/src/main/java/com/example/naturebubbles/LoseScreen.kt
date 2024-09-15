@@ -1,8 +1,6 @@
 package com.example.naturebubbles
 
-import android.widget.Space
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,7 +25,11 @@ import com.example.naturebubbles.ui.theme.nujnoefont
 
 @Preview
 @Composable
-fun LoseScreen() {
+fun LoseScreen(
+    lvl: Int = 1,
+    onRestart: () -> Unit = {},
+    onHome: () -> Unit = {},
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -36,7 +37,7 @@ fun LoseScreen() {
                 painter = painterResource(id = R.drawable.background2),
                 contentScale = ContentScale.Crop
             )
-    ){
+    ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -55,7 +56,7 @@ fun LoseScreen() {
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Level 1",
+                text = "Level $lvl",
                 fontFamily = nujnoefont,
                 fontSize = 60.sp,
                 color = Color.White
@@ -76,7 +77,7 @@ fun LoseScreen() {
                 contentDescription = "Next Level Button",
                 modifier = Modifier
                     .clickable {
-
+                        onRestart()
                     }
                     .size(260.dp, 90.dp)
             )
@@ -89,7 +90,7 @@ fun LoseScreen() {
                 contentDescription = "Home Button",
                 modifier = Modifier
                     .clickable {
-
+                        onHome()
                     }
                     .size(160.dp, 80.dp)
             )

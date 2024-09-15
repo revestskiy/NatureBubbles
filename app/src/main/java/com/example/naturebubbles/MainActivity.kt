@@ -79,6 +79,11 @@ class MainActivity : ComponentActivity() {
                         val lvl = backStackEntry.arguments?.getString("lvl")!!.toInt()
                         GameScreen(
                             lvl = lvl,
+                            onHomeClick = {
+                                navController.navigate("menu") {
+                                    popUpTo("levels") { inclusive = true }
+                                }
+                            },
                             onBackClick = navController::popBackStack
                         )
                     }

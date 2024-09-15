@@ -6,12 +6,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,7 +30,12 @@ import com.example.naturebubbles.ui.theme.nujnoefont
 
 @Preview
 @Composable
-fun WinScreen() {
+fun WinScreen(
+    lvl: Int = 1,
+    score: Int = 0,
+    onHome: () -> Unit = {},
+    onNextLevel: () -> Unit = {},
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -61,7 +69,7 @@ fun WinScreen() {
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Level 1 Completed",
+                text = "Level $lvl Completed",
                 fontFamily = nujnoefont,
                 fontSize = 60.sp,
                 color = Color.White
@@ -70,11 +78,30 @@ fun WinScreen() {
             // Coins ближе к Level 1 Completed
             Spacer(modifier = Modifier.height(8.dp))
 
-            Image(
-                painter = painterResource(id = R.drawable.moneti),
-                contentDescription = "Coins",
-                modifier = Modifier.size(170.dp)
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .paint(
+                        painter = painterResource(id = R.drawable.red_bg),
+                        contentScale = ContentScale.Crop
+                    )
+                    .padding(4.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_coin), // Coin image resource
+                    contentDescription = "Coin",
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(modifier = Modifier.width(4.dp))  // Small space between coin and score
+                Text(
+                    text = "$score",
+                    style = MaterialTheme.typography.titleLarge.copy(fontFamily = nujnoefont),
+                    color = Color.White,
+                    fontSize = 28.sp,
+                    modifier = Modifier.padding(top = 10.dp)
+                )
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -84,7 +111,7 @@ fun WinScreen() {
                 contentDescription = "Next Level Button",
                 modifier = Modifier
                     .clickable {
-                        // Обработка клика
+                        onNextLevel()
                     }
                     .size(260.dp, 90.dp)
             )
@@ -97,7 +124,7 @@ fun WinScreen() {
                 contentDescription = "Home Button",
                 modifier = Modifier
                     .clickable {
-                        // Обработка клика
+                        onHome()
                     }
                     .size(160.dp, 80.dp)
             )
