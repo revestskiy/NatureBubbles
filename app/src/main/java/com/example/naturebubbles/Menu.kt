@@ -23,7 +23,11 @@ import com.example.naturebubbles.ui.theme.nujnoefont
 
 @Preview
 @Composable
-fun MenuScreen() {
+fun MenuScreen(
+    onSettingsClick: () -> Unit = {},
+    onStartClick: () -> Unit = {},
+    onExitClick: () -> Unit = {},
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -55,6 +59,7 @@ fun MenuScreen() {
                     modifier = Modifier
                         .clickable {
 
+                            onStartClick()
                         }
                         .padding(10.dp)
                         .size(210.dp, 80.dp)
@@ -66,6 +71,7 @@ fun MenuScreen() {
                     modifier = Modifier
                         .clickable {
 
+                            onSettingsClick()
                         }
                         .padding(10.dp)
                         .size(210.dp, 80.dp)
@@ -77,6 +83,7 @@ fun MenuScreen() {
                     modifier = Modifier
                         .clickable {
 
+                            onExitClick()
                         }
                         .padding(10.dp)
                         .size(210.dp, 80.dp)

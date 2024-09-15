@@ -16,32 +16,30 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.naturebubbles.ui.theme.Orange
 import com.example.naturebubbles.ui.theme.nujnoefont
 
 @Preview
 @Composable
-fun SettingsScreen() {
-    var musicVolume by remember { mutableStateOf(0.5f) }
-    var soundEffectsVolume by remember { mutableStateOf(0.5f) }
+fun SettingsScreen(
+    onBackClick: () -> Unit = {},
+) {
+    var musicVolume by remember { mutableFloatStateOf(0.5f) }
+    var soundEffectsVolume by remember { mutableFloatStateOf(0.5f) }
 
     Box(
         modifier = Modifier
@@ -57,24 +55,26 @@ fun SettingsScreen() {
                 .padding(horizontal = 16.dp, vertical = 40.dp)
                 .paint(
                     painter = painterResource(id = R.drawable.backgroundsettings),
-                    contentScale = ContentScale.FillWidth
-                )
+                    contentScale = ContentScale.Crop
+                ),
+            contentAlignment = Alignment.Center
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(10.dp)
             ) {
+                Spacer(modifier = Modifier.height(160.dp))
                 Text(
                     text = "OPTIONS",
                     fontFamily = nujnoefont,
-                    fontSize = 32.sp,
+                    fontSize = 38.sp,
                     color = Color.White,
-                    modifier = Modifier.padding(top = 32.dp), // Добавлено больше отступов вниз
+                    modifier = Modifier, // Добавлено больше отступов вниз
                     style = TextStyle(
                         shadow = Shadow(
                             color = Color.Red, // Красная обводка
                             offset = Offset(1f, 1f),
-                            blurRadius = 2f
+                            blurRadius = 4f
                         )
                     )
                 )
@@ -82,14 +82,14 @@ fun SettingsScreen() {
                 Text(
                     text = "AUDIO",
                     fontFamily = nujnoefont,
-                    fontSize = 24.sp,
+                    fontSize = 38.sp,
                     color = Color.White,
-                    modifier = Modifier.padding(top = 24.dp), // Добавлено больше отступов вниз
+                    modifier = Modifier.padding(top = 32.dp), // Добавлено больше отступов вниз
                     style = TextStyle(
                         shadow = Shadow(
                             color = Color.Red, // Красная обводка
                             offset = Offset(1f, 1f),
-                            blurRadius = 2f
+                            blurRadius = 4f
                         )
                     )
                 )
@@ -97,7 +97,7 @@ fun SettingsScreen() {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp),
+                        .padding(vertical = 8.dp, horizontal = 20.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
@@ -110,7 +110,7 @@ fun SettingsScreen() {
                             shadow = Shadow(
                                 color = Color.Red, // Красная обводка
                                 offset = Offset(1f, 1f),
-                                blurRadius = 2f
+                                blurRadius = 4f
                             )
                         )
                     )
@@ -131,7 +131,7 @@ fun SettingsScreen() {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp),
+                        .padding(vertical = 8.dp, horizontal = 20.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
@@ -144,7 +144,7 @@ fun SettingsScreen() {
                             shadow = Shadow(
                                 color = Color.Red, // Красная обводка
                                 offset = Offset(1f, 1f),
-                                blurRadius = 2f
+                                blurRadius = 4f
                             )
                         )
                     )
@@ -169,9 +169,9 @@ fun SettingsScreen() {
                     contentDescription = "Back Button",
                     modifier = Modifier
                         .clickable {
-
+                            onBackClick()
                         }
-                        .size(150.dp, 50.dp)
+                        .size(150.dp, 80.dp)
                         .padding(8.dp)
                 )
             }

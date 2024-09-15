@@ -1,6 +1,5 @@
 package com.example.naturebubbles
 
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -25,7 +24,10 @@ import com.example.naturebubbles.ui.theme.nujnoefont
 
 @Preview
 @Composable
-fun LevelsScreen(){
+fun LevelsScreen(
+    onLvlClick: (Int) -> Unit = {},
+    onBackClick: () -> Unit = {},
+){
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -57,6 +59,7 @@ fun LevelsScreen(){
                     modifier = Modifier
                         .clickable {
 
+                            onLvlClick(1)
                         }
                         .padding(10.dp)
                         .size(190.dp, 80.dp)
@@ -68,6 +71,7 @@ fun LevelsScreen(){
                     modifier = Modifier
                         .clickable {
 
+                            onLvlClick(2)
                         }
                         .padding(10.dp)
                         .size(190.dp, 80.dp)
@@ -79,6 +83,7 @@ fun LevelsScreen(){
                     modifier = Modifier
                         .clickable {
 
+                            onLvlClick(3)
                         }
                         .padding(10.dp)
                         .size(190.dp, 80.dp)
@@ -89,6 +94,7 @@ fun LevelsScreen(){
                     modifier = Modifier
                         .clickable {
 
+                            onLvlClick(4)
                         }
                         .padding(10.dp)
                         .size(190.dp, 80.dp)
@@ -99,6 +105,7 @@ fun LevelsScreen(){
                     modifier = Modifier
                         .clickable {
 
+                            onLvlClick(5)
                         }
                         .padding(10.dp)
                         .size(190.dp, 80.dp)
@@ -108,6 +115,7 @@ fun LevelsScreen(){
                     contentDescription = "",
                     modifier = Modifier
                         .clickable {
+                            onBackClick()
                         }
                         .size(140.dp, 60.dp)
                 )
