@@ -49,30 +49,45 @@ class MainActivity : ComponentActivity() {
                     composable("menu") {
                         MenuScreen(
                             onExitClick = {
+                                SoundManager.playSound()
                                 navController.navigate("exit")
                             },
                             onSettingsClick = {
+                                SoundManager.playSound()
                                 navController.navigate("settings")
                             },
                             onStartClick = {
+                                SoundManager.playSound()
                                 navController.navigate("levels")
                             }
                         )
                     }
                     composable("exit") {
                         ExitScreen(
-                            onBack = navController::popBackStack
+                            onBack = {
+                                SoundManager.playSound()
+                                navController.popBackStack()
+                            }
                         )
                     }
                     composable("settings") {
                         SettingsScreen(
-                            onBackClick = navController::popBackStack
+                            onBackClick = {
+                                SoundManager.playSound()
+                                navController.popBackStack()
+                            }
                         )
                     }
                     composable("levels") {
                         LevelsScreen(
-                            onBackClick = navController::popBackStack,
-                            onLvlClick = { lvl -> navController.navigate("game/$lvl") }
+                            onBackClick = {
+                                SoundManager.playSound()
+                                navController.popBackStack()
+                            },
+                            onLvlClick = { lvl ->
+                                SoundManager.playSound()
+                                navController.navigate("game/$lvl")
+                            }
                         )
                     }
                     composable("game/{lvl}") { backStackEntry ->
@@ -80,17 +95,22 @@ class MainActivity : ComponentActivity() {
                         GameScreen(
                             lvl = lvl,
                             onHomeClick = {
+                                SoundManager.playSound()
                                 navController.navigate("menu") {
                                     popUpTo("levels") { inclusive = true }
                                 }
                             },
-                            onBackClick = navController::popBackStack
+                            onBackClick = {
+                                SoundManager.playSound()
+                                navController.popBackStack()
+                            }
                         )
                     }
                 }
             }
         }
     }
+
     override fun onResume() {
         super.onResume()
         SoundManager.resumeMusic()

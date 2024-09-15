@@ -8,7 +8,7 @@ object SoundManager {
     private lateinit var soundPlayer: MediaPlayer
 
     fun init(context: Context) = runCatching {
-        musicPlayer = MediaPlayer.create(context, R.raw.sound)
+        musicPlayer = MediaPlayer.create(context, R.raw.music)
         soundPlayer = MediaPlayer.create(context, R.raw.sound)
     }
 

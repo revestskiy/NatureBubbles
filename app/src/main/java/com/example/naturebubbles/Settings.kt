@@ -38,8 +38,8 @@ import com.example.naturebubbles.ui.theme.nujnoefont
 fun SettingsScreen(
     onBackClick: () -> Unit = {},
 ) {
-    var musicVolume by remember { mutableFloatStateOf(0.5f) }
-    var soundEffectsVolume by remember { mutableFloatStateOf(0.5f) }
+    var musicVolume by remember { mutableFloatStateOf(Prefs.musicVolume) }
+    var soundEffectsVolume by remember { mutableFloatStateOf(Prefs.soundVolume) }
 
     Box(
         modifier = Modifier
@@ -55,7 +55,7 @@ fun SettingsScreen(
                 .padding(horizontal = 16.dp, vertical = 40.dp)
                 .paint(
                     painter = painterResource(id = R.drawable.backgroundsettings),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.FillWidth
                 ),
             contentAlignment = Alignment.Center
         ) {
@@ -68,15 +68,8 @@ fun SettingsScreen(
                     text = "OPTIONS",
                     fontFamily = nujnoefont,
                     fontSize = 38.sp,
-                    color = Color.White,
+                    color = Color(0xffFFA000),
                     modifier = Modifier, // Добавлено больше отступов вниз
-                    style = TextStyle(
-                        shadow = Shadow(
-                            color = Color.Red, // Красная обводка
-                            offset = Offset(1f, 1f),
-                            blurRadius = 4f
-                        )
-                    )
                 )
 
                 Text(
@@ -117,7 +110,11 @@ fun SettingsScreen(
 
                     Slider(
                         value = musicVolume,
-                        onValueChange = { musicVolume = it },
+                        onValueChange = {
+                            musicVolume = it
+                            Prefs.musicVolume = it
+                            SoundManager.setMusicVolume()
+                        },
                         valueRange = 0f..1f,
                         modifier = Modifier.weight(2f),
                         colors = SliderDefaults.colors(
@@ -151,7 +148,11 @@ fun SettingsScreen(
 
                     Slider(
                         value = soundEffectsVolume,
-                        onValueChange = { soundEffectsVolume = it },
+                        onValueChange = {
+                            soundEffectsVolume = it
+                            Prefs.soundVolume = it
+                            SoundManager.setSoundVolume()
+                        },
                         valueRange = 0f..1f,
                         modifier = Modifier.weight(2f),
                         colors = SliderDefaults.colors(

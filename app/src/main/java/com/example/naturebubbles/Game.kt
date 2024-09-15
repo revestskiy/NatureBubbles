@@ -34,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -66,12 +67,33 @@ enum class ElementType {
     FIRE, WATER, LEAF, ROCK, SNOW, EMPTY
 }
 
-
 fun createRandomGrid(rows: Int, cols: Int): Array<Array<ElementType>> {
     val elements = ElementType.entries.toList() - ElementType.EMPTY
-    return Array(rows) {
-        Array(cols) {
-            elements.random()
+    val totalCells = rows * cols
+
+    // Ensure we have enough space for at least 3 of each element
+    require(elements.size * 3 <= totalCells) { "Grid is too small to contain at least 3 of each element type" }
+
+    // Create a list that will hold all elements to be placed
+    val gridElements = mutableListOf<ElementType>()
+
+    // Add 3 of each element to the list
+    elements.forEach { element ->
+        repeat(3) { gridElements.add(element) }
+    }
+
+    // Fill the rest of the grid with random elements
+    while (gridElements.size < totalCells) {
+        gridElements.add(elements.random())
+    }
+
+    // Shuffle the list to distribute the elements randomly
+    gridElements.shuffle()
+
+    // Create the grid and place the shuffled elements
+    return Array(rows) { row ->
+        Array(cols) { col ->
+            gridElements.removeAt(0)
         }
     }
 }
@@ -91,6 +113,7 @@ fun GameScreen(
     var isSettings by remember {
         mutableStateOf(false)
     }
+    val isPaused by viewModel.isPaused
 
     if (isWin != null) {
         if (isWin == true) {
@@ -154,7 +177,11 @@ fun GameScreen(
                         Icon(
                             painter = painterResource(id = R.drawable.ic_pause),  // Pause icon resource
                             contentDescription = "Pause",
-                            tint = Color.Unspecified
+                            tint = Color.Unspecified,
+                            modifier = Modifier
+                                .alpha(
+                                    if (isPaused) 0.5f else 1f
+                                )
                         )
                     }
 
@@ -211,7 +238,7 @@ fun GameScreen(
                                     element = element,
                                     isVisible = viewModel.isElementVisible(rowIndex, colIndex),
                                     modifier = Modifier
-                                        .size(38.dp)
+                                        .size(34.dp)
                                         .padding(2.dp)
                                         .clickable {
                                             viewModel.onElementClick(rowIndex, colIndex)
@@ -324,6 +351,7 @@ class GameViewModel(lvl: Int) : ViewModel() {
     private var visibilityGrid = mutableStateOf(Array(gridRows) { Array(gridCols) { true } })
 
     private val _isPaused = mutableStateOf(false)
+    val isPaused: State<Boolean> get() = _isPaused
 
     private val _isWin = mutableStateOf(null as Boolean?)
 
@@ -354,7 +382,8 @@ class GameViewModel(lvl: Int) : ViewModel() {
             val newGrid = _grid.value.map { it.copyOf() }.toTypedArray()
 
             toRemove.forEach { (r, c) ->
-                newGrid[r][c] = ElementType.EMPTY // Помечаем элемент как EMPTY вместо перезаполнения
+                newGrid[r][c] =
+                    ElementType.EMPTY // Помечаем элемент как EMPTY вместо перезаполнения
                 newVisibilityGrid[r][c] = true
             }
 
@@ -363,7 +392,9 @@ class GameViewModel(lvl: Int) : ViewModel() {
 
             _score.intValue += toRemove.size
 
-            if (_grid.value.flatten().all { it == ElementType.EMPTY }) {
+            if (_grid.value.flatten().all { it == ElementType.EMPTY }
+                || _score.intValue >= gridCols * gridRows / 2
+            ) {
                 _isWin.value = true
             }
         }
@@ -401,7 +432,8 @@ class GameViewModel(lvl: Int) : ViewModel() {
                 }
             }
 
-            _isWin.value = _grid.value.flatten().all { it == ElementType.EMPTY } || _score.intValue >= gridCols * gridRows/2
+            _isWin.value = _grid.value.flatten()
+                .all { it == ElementType.EMPTY } || _score.intValue >= gridCols * gridRows / 2
         }
     }
 
