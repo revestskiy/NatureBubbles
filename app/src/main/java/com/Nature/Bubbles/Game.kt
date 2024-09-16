@@ -1,4 +1,4 @@
-package com.example.naturebubbles
+package com.Nature.Bubbles
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -48,7 +48,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.naturebubbles.ui.theme.nujnoefont
+import com.Nature.Bubbles.ui.theme.nujnoefont
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale

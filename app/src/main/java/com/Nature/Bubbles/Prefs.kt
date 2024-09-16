@@ -1,19 +1,10 @@
-package com.example.naturebubbles
+package com.Nature.Bubbles
 
 object Prefs {
     private lateinit var sharedPrefs: android.content.SharedPreferences
 
     fun init(context: android.content.Context) {
         sharedPrefs = context.getSharedPreferences("cloudgame", android.content.Context.MODE_PRIVATE)
-    }
-
-    fun isLevelActive(level: Int): Boolean {
-        if (level == 1) return true
-        return sharedPrefs.getBoolean("level${level - 1}", false)
-    }
-
-    fun passLevel(level: Int) {
-        sharedPrefs.edit().putBoolean("level$level", true).apply()
     }
 
     var musicVolume: Float

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.naturebubbles"
+    namespace = "com.Nature.Bubbles"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.naturebubbles"
+        applicationId = "com.Nature.Bubbles"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

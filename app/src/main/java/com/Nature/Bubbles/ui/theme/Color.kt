@@ -1,4 +1,4 @@
-package com.example.naturebubbles.ui.theme
+package com.Nature.Bubbles.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

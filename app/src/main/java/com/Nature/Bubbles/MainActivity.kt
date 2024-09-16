@@ -1,4 +1,4 @@
-package com.example.naturebubbles
+package com.Nature.Bubbles
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.naturebubbles.ui.theme.NatureBubblesTheme
-import com.example.naturebubbles.ui.theme.nujnoefont
+import com.Nature.Bubbles.ui.theme.NatureBubblesTheme
+import com.Nature.Bubbles.ui.theme.nujnoefont
 import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {

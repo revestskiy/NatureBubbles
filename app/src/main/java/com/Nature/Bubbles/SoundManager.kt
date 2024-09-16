@@ -1,4 +1,4 @@
-package com.example.naturebubbles
+package com.Nature.Bubbles
 
 import android.content.Context
 import android.media.MediaPlayer
